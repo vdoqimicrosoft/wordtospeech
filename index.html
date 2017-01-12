@@ -1,0 +1,152 @@
+<!DOCTYPE>
+<html>
+<head>
+<title>WordToSpeech</title>
+<style>
+body{
+	font-size:5em;
+}
+#wordCount{
+	text-align:center;
+}
+.speak{
+	width:8em;
+	margin:0.2em auto;
+	heigth:8em;
+}
+.confirm{
+	width:8em;
+	margin:0.2em auto;
+	heigth:8em;
+}
+.button{
+	display:inline-block;
+	outline:none;
+	cursor:pointer;
+	text-align:center;
+	text-decoration:none;
+	font:1em 'Microsoft yahei',Arial, Helvetica, sans-serif;
+	padding:.5em 2.5em .5em;
+	text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+}
+.green{
+	color:#e8fde;
+	border: solid 1px #538312;
+	background:-webkit-gradient(linear, left top, left bottom, from(#7db72f), to(#4e7d0e));
+	background: -moz-linear-gradient(top, #7db72f, #4e7d0e);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7db72f', endColorstr='#4e7d0e');
+}
+a:-webkit-any-link {
+    color: -webkit-link;
+    text-decoration: underline;
+    cursor: auto;
+}
+.input{
+	margin:0.5em auto;
+}
+#input{
+	width:100%;
+	-web-kit-appearance:none;
+	-moz-appearance: none;
+	font-size:0.3em;
+	height:1.5em;
+	border:1px solid #c8cccf;
+	color:#6a6f77;
+}
+</style>
+
+</head>
+<body>
+
+<div id="wordCount">0</div>
+<div class="speak"><a id="speak" class="button green">Speak</a></div>
+
+<audio id="url" src=""></audio>
+<div class="input"><input type="text" name="input" id="input"/><div>
+<div class="confirm"><a id="confirm" class="button green">Confir</a></div>
+
+<script>
+
+
+
+
+//Button Click Event
+window.onload=function(){
+	
+	
+	//Get Word--delete
+	//var text=document.getElementById("wordCount").innerText;
+	var index=1;
+	var arr=[];
+	
+	var ele = document.getElementById('speak');
+	ele.onclick=function(){
+		ReadWord(index);
+	}
+	
+	var input = document.getElementById('input');
+	var con = document.getElementById('confirm');
+	con.onclick=function(){
+		var inputVal = input.value;//input
+		//console.log(inputVal);
+		var ori = arr.join("");//original
+		//console.log(ori);
+		con.innerText=inputVal==ori?"True":"False";
+		con.style=inputVal==ori?"color:black":"color:red";
+		inputVal===ori?index++:(index=index-2);
+		if(index<1){index=1};
+		document.getElementById("wordCount").innerText=index+" count";
+		input.value="";
+	}
+	
+	
+	
+	function GetRandNum(num){
+		result=[];
+		for(var i=0;i<num;i++){
+			//letter
+			//var ranNum= Math.floor(Math.random()*26);
+			//result.push(String.fromCharCode(65+ranNum));
+			//number
+			var ranNum = Math.floor(Math.random()*10);
+			result.push(ranNum);
+		}
+		return result;
+	}
+
+	function ReadWord(i){
+		var url=document.getElementById("url");
+		arr=null;
+		arr=GetRandNum(i);
+		(function(arr){
+			var u=0;
+			var length = arr.length;
+			(function(){
+				setInterval(function(){
+					if(u<length){
+						
+						console.log(arr[u]);
+						url.src=ApiUrl(arr[u]);
+						url.play();
+						u++;
+					}
+				},1000);
+			}())
+		}(arr));
+		document.getElementById("wordCount").innerText = i+" count";
+	}
+
+	function ApiUrl(t){
+		return "http://tts.baidu.com/text2audio?idx=1&tex="+t+"&cuid=baidu_speech_demo&cod=2&lan=zh&ctp=1&pdt=1&spd=5&per=0&vol=5&pit=5";
+	}
+
+}
+</script>
+</body>
+</html>
