@@ -59,6 +59,17 @@ a:-webkit-any-link {
 	border:1px solid #c8cccf;
 	color:#6a6f77;
 }
+.group{
+	width:8em;
+	margin:0.5em auto;
+	heigth:8em;
+}
+.up{
+	
+}
+.down{
+	
+}
 </style>
 
 </head>
@@ -70,12 +81,13 @@ a:-webkit-any-link {
 <audio id="url" src=""></audio>
 <div class="input"><input type="text" name="input" id="input"/><div>
 <div class="confirm"><a id="confirm" class="button green">Confir</a></div>
-
+<div class="group">
+	<div id="up" class="up button green">UpCo</div>
+</div>
+<div class="group">
+	<div id="down" class="down button green">DoCo</div>
+</div>
 <script>
-
-
-
-
 //Button Click Event
 window.onload=function(){
 	
@@ -105,6 +117,17 @@ window.onload=function(){
 		input.value="";
 	}
 	
+	var up = document.getElementById("up");
+	var down = document.getElementById("down");
+	up.onclick=function(){
+		index = index+1;
+		document.getElementById("wordCount").innerText = index+" count";
+	}
+	down.onclick=function(){
+		index=index-1;
+		if(index<1){index=1;}
+		document.getElementById("wordCount").innerText = index+" count";
+	}
 	
 	
 	function GetRandNum(num){
@@ -119,7 +142,6 @@ window.onload=function(){
 		}
 		return result;
 	}
-
 	function ReadWord(i){
 		var url=document.getElementById("url");
 		arr=null;
@@ -141,11 +163,9 @@ window.onload=function(){
 		}(arr));
 		document.getElementById("wordCount").innerText = i+" count";
 	}
-
 	function ApiUrl(t){
 		return "http://tts.baidu.com/text2audio?idx=1&tex="+t+"&cuid=baidu_speech_demo&cod=2&lan=zh&ctp=1&pdt=1&spd=5&per=0&vol=5&pit=5";
 	}
-
 }
 </script>
 </body>
