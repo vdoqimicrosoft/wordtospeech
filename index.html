@@ -147,24 +147,34 @@ window.onload=function(){
 		arr=null;
 		arr=GetRandNum(i);
 		(function(arr){
+			<!-- var u=0; -->
+			<!-- var length = arr.length; -->
+			<!-- (function(){ -->
+				<!-- setInterval(function(){ -->
+					<!-- if(u<length){ -->
+						
+						<!-- console.log(arr[u]); -->
+						<!-- url.src=ApiUrl(arr[u]); -->
+						<!-- url.play(); -->
+						<!-- u++; -->
+					<!-- } -->
+				<!-- },1000); -->
+			<!-- }()) -->
 			var u=0;
 			var length = arr.length;
-			(function(){
-				setInterval(function(){
-					if(u<length){
-						
-						console.log(arr[u]);
-						url.src=ApiUrl(arr[u]);
-						url.play();
-						u++;
-					}
-				},1000);
-			}())
+			var word="";
+			while(u<length){
+				word+=arr[u]+"|";
+				u++;
+			}
+			console.log(word);
+			url.src=ApiUrl(word);
+			url.play();
 		}(arr));
 		document.getElementById("wordCount").innerText = i+" count";
 	}
 	function ApiUrl(t){
-		return "http://tts.baidu.com/text2audio?idx=1&tex="+t+"&cuid=baidu_speech_demo&cod=2&lan=zh&ctp=1&pdt=1&spd=5&per=0&vol=5&pit=5";
+		return "http://tts.baidu.com/text2audio?idx=1&tex="+t+"&cuid=baidu_speech_demo&cod=2&lan=zh&ctp=1&pdt=1&spd=1&per=0&vol=5&pit=5";
 	}
 }
 </script>
